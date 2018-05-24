@@ -5,6 +5,13 @@
 import pymysql
 
 dictOption = {}
+dictOption ['count'] = 1
+
+dictOptionUser ={}
+dictOptionUser ['count'] = 1
+
+dictOptionAct = {}
+dictOptionAct ['count'] = 1
  
 # 打开数据库连接
 db = pymysql.connect("localhost","root","root1234","db_recycle_core", charset='utf8',cursorclass = pymysql.cursors.SSDictCursor)
@@ -46,18 +53,33 @@ try:
 
         #拆分字段,
         if user_option != None :
+            dictOption ['count'] +=1
+            dictOptionUser ['count'] +=1
             for x in user_option.split(','):
                 if x in dictOption:
                     dictOption[x] += 1
                 else:
                     dictOption[x] =1
+                
+                if x in dictOptionUser:
+                    dictOptionUser[x] += 1
+                else:
+                    dictOptionUser[x] =1
+                    
 
         if act_option != None :
+            dictOption ['count'] +=1
+            dictOptionAct ['count'] +=1
             for x in act_option.split(','):
                 if x in dictOption:
                     dictOption[x] += 1
                 else:
                     dictOption[x] =1
+                
+                if x in dictOptionAct:
+                    dictOptionAct[x] += 1
+                else:
+                    dictOptionAct[x] =1
         
         # 打印结果
         #print ('.')
@@ -77,9 +99,21 @@ except:
 db.close()
 
 #打印选项表
+
 print (dictOption)
 
 f = open("./option_all.txt",'w')
 f.write(str(dictOption))
+f.close()
 
+
+print (dictOptionUser)
+f = open("./option_user.txt",'w')
+f.write(str(dictOptionUser))
+f.close()
+
+
+print (dictOptionAct)
+f = open("./option_act.txt",'w')
+f.write(str(dictOptionAct))
 f.close()
